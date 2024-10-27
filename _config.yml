@@ -23,8 +23,8 @@ author:
   # Biographic information
   avatar           : "profile.png"
   name             : "Your Sidebar Name"
-  pronouns         : # example: "she/her"  
-  bio              : "Short biography for the left-hand sidebar"
+  pronouns         : "he/his"  
+  bio              : "Trying to build something cool"
   location         : "Earth"
   employer         : "Vanderbilt University"
   uri              : # URL
@@ -265,7 +265,7 @@ defaults:
       comments: true
   # _portfolio
   - scope:
-      path: ""
+      path: "" 
       type: portfolio
     values:
       layout: single
