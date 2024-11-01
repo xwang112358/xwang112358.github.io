@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-<iframe src="https://docs.google.com/viewer?url=https://xwang112358.github.io/files/Xin_Wang.pdf&embedded=true" 
+<iframe src="https://docs.google.com/viewer?url=https://xwang112358.github.io/files/resume.pdf&embedded=true" 
         width="100%" height="800px" style="border:none;"></iframe>
 
 <!-- <object data="../files/paper1.pdf" type="application/pdf" width="100%" height="800px">
