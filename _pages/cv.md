@@ -9,8 +9,10 @@ redirect_from:
 
 {% include base_path %}
 
-<iframe src="https://docs.google.com/viewer?url=https://xwang112358.github.io/files/resume.pdf&embedded=true" 
-        width="100%" height="800px" style="border:none;"></iframe>
+will come out soon
+
+<!-- <iframe src="https://docs.google.com/viewer?url=https://xwang112358.github.io/files/resume.pdf&embedded=true" 
+        width="100%" height="800px" style="border:none;"></iframe> -->
 
 <!-- <object data="../files/paper1.pdf" type="application/pdf" width="100%" height="800px">
     <p>Your browser does not support PDFs. <a href="../files/paper1.pdf">Download the PDF</a>.</p>
