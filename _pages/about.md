@@ -14,7 +14,7 @@ Research Interests:
 
 - AI for Biochemistry
 - Generative Models (e.g. Diffusion Model)
-- Data Mining and Machine Learning
+- Data-driven Machine Learning
 
 News:
 ------
