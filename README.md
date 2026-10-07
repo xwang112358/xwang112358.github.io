@@ -22,7 +22,7 @@ npm run preview  # serve the built site
 | CV page (embedded PDF) | `public/files/Xin_Wang_CV.pdf` |
 | Blog posts (Markdown, `$…$` / `$$…$$` math via KaTeX) | `src/content/blog/*.md` |
 | Images and files | `public/images/`, `public/files/` |
-| Profile photo | random on each visit from `public/images/cats/` (+ the default `public/images/profile.jpg`, also shown without JS); add/remove square ≥ 352px images there |
+| Profile photo | default `public/images/profile.jpg`; the "Another cat" button shows random photos from `public/images/cats/` (add/remove square ≥ 352px images there) |
 
 The downloadable CV (`public/files/Xin_Wang_CV.pdf`) is generated from the LaTeX resume with
 `python ../Xin_Wang_Resume_latex/build_cv.py`, which strips the phone number from the public copy.

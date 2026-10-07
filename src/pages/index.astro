@@ -7,7 +7,7 @@ import { publications } from '../data/publications';
 import { talks } from '../data/cv';
 import { readdirSync } from 'node:fs';
 
-// Every image in public/images/cats/ (plus the default photo) is in the profile-photo rotation.
+// The default photo shows first; the "Another cat" button cycles through every image in public/images/cats/.
 const catPhotos = [
   site.photo,
   ...readdirSync('public/images/cats')
@@ -32,21 +32,18 @@ const fmt = (d: string) => {
         Another cat
       </button>
       <script is:inline>
-        // Random cat on each visit (never the same twice in a row) + a button to shuffle.
-        // Without JS the default photo stays and the button stays hidden.
+        // The default photo shows first; "Another cat" swaps in a random different one.
+        // Without JS the button stays hidden.
         (function () {
           var img = document.getElementById('profile-photo');
           var button = document.getElementById('another-cat');
           var photos = JSON.parse(img.dataset.photos);
-          var current = null;
-          try { current = localStorage.getItem('profile-photo'); } catch (e) {}
+          var current = img.getAttribute('src');
           function pick() {
             var options = photos.filter(function (p) { return p !== current; });
             current = options[Math.floor(Math.random() * options.length)];
-            try { localStorage.setItem('profile-photo', current); } catch (e) {}
             return current;
           }
-          img.src = pick();
           button.hidden = false;
           button.addEventListener('click', function () {
             var next = new Image();
