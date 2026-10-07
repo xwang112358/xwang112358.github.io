@@ -16,8 +16,8 @@ const authors = pub.authors.map((raw) => {
   const name = equal ? raw.slice(0, -1) : raw;
   return { name, equal, me: name === ME, group: name === GROUP };
 });
-// Show the first few authors, always including me (or my consortium); fold the rest.
-const keep = Math.max(...authors.map((a, i) => (a.me || a.group ? i + 1 : 0)));
+// Show the first few authors, always including me (or my consortium) and every co-first author; fold the rest.
+const keep = Math.max(...authors.map((a, i) => (a.me || a.group || a.equal ? i + 1 : 0)));
 const cutoff = Math.max(MAX_SHOWN, keep);
 const long = authors.length > cutoff + 1;
 const shown = long ? authors.slice(0, cutoff) : authors;

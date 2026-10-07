@@ -45,8 +45,8 @@ export const publications: Publication[] = [
   {
     title: 'Benchmarking AI Agents for Addressing Scientific Challenges Across Scales',
     authors: [
-      'Tianyu Liu†', 'Xin Wang†', 'Antonia Panescu†', 'Lisa Xinyi Chen', 'Wenxin Long', 'Xinyu Wei', 'Yueqian Jing',
-      'Ziyao Zeng', 'Jihang Chen', 'Sihan Jiang', 'Ziqing Wang', 'Siyi Gu', 'Siyu Chen', 'Xinyang Hu', 'Haoran Shao',
+      'Tianyu Liu†', 'Xin Wang†', 'Antonia Panescu†', 'Lisa Xinyi Chen†', 'Wenxin Long†', 'Xinyu Wei†', 'Yueqian Jing†',
+      'Ziyao Zeng†', 'Jihang Chen', 'Sihan Jiang', 'Ziqing Wang', 'Siyi Gu', 'Siyu Chen', 'Xinyang Hu', 'Haoran Shao',
       'Leqi Xu', 'Wangjie Zheng', 'Zhiyuan Cao', 'Ada Fang', 'Botao Yu', 'Kunyang Sun', 'Rex Ying', 'Arman Cohan',
       'Qingyu Chen', 'Lingzhou Xue', 'Kaize Ding', 'Yuanqi Du', 'Wengong Jin', 'Zhuoran Yang', 'Marinka Zitnik',
       'James Zou', 'Hua Xu', 'Hongyu Zhao',
