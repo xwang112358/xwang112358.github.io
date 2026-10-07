@@ -7,7 +7,7 @@ import { publications } from '../data/publications';
 import { talks } from '../data/cv';
 import { readdirSync } from 'node:fs';
 
-// The default photo shows first; the "Another cat" button cycles through every image in public/images/cats/.
+// The default photo shows first; the "More Cats!" button cycles through every image in public/images/cats/.
 const catPhotos = [
   site.photo,
   ...readdirSync('public/images/cats')
@@ -29,10 +29,10 @@ const fmt = (d: string) => {
       <img id="profile-photo" class="photo" src={site.photo} alt={site.photoAlt} width="176" height="176" data-photos={JSON.stringify(catPhotos)} />
       <button id="another-cat" class="another-cat" type="button" hidden>
         <Icon name="refresh" size={14} />
-        Another cat
+        More Cats!
       </button>
       <script is:inline>
-        // The default photo shows first; "Another cat" swaps in a random different one.
+        // The default photo shows first; "More Cats!" swaps in a random different one.
         // Without JS the button stays hidden.
         (function () {
           var img = document.getElementById('profile-photo');

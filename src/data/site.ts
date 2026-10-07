@@ -10,7 +10,7 @@ export const site = {
   email: 'allen.wang.xw532@yale.edu',
   cvPdf: '/files/Xin_Wang_CV.pdf',
   photo: '/images/profile.jpg',
-  // Default photo; the home page's "Another cat" button swaps in photos from public/images/cats/.
+  // Default photo; the home page's "More Cats!" button swaps in photos from public/images/cats/.
   photoAlt: 'A photo of my cats',
 };
 
