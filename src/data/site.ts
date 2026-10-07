@@ -10,7 +10,8 @@ export const site = {
   email: 'allen.wang.xw532@yale.edu',
   cvPdf: '/files/Xin_Wang_CV.pdf',
   photo: '/images/profile.jpg',
-  photoAlt: 'My cat, a fluffy brown-and-white cat resting its chin on a wooden shelf',
+  // Default photo; the home page rotates through public/images/cats/ on each visit.
+  photoAlt: 'A photo of my cats',
 };
 
 export type Link = { label: string; href: string; icon: 'mail' | 'scholar' | 'github' | 'linkedin' | 'orcid' | 'cv' };
