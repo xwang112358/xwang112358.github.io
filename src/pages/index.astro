@@ -25,20 +25,42 @@ const fmt = (d: string) => {
 
 <Base>
   <section class="hero">
-    <img id="profile-photo" class="photo" src={site.photo} alt={site.photoAlt} width="176" height="176" data-photos={JSON.stringify(catPhotos)} />
-    <script is:inline>
-      // Show a random cat on each visit, never the same one twice in a row. Without JS the default photo stays.
-      (function () {
-        var img = document.getElementById('profile-photo');
-        var photos = JSON.parse(img.dataset.photos);
-        var last = null;
-        try { last = localStorage.getItem('profile-photo'); } catch (e) {}
-        var options = photos.filter(function (p) { return p !== last; });
-        var pick = options[Math.floor(Math.random() * options.length)];
-        img.src = pick;
-        try { localStorage.setItem('profile-photo', pick); } catch (e) {}
-      })();
-    </script>
+    <div class="photo-col">
+      <img id="profile-photo" class="photo" src={site.photo} alt={site.photoAlt} width="176" height="176" data-photos={JSON.stringify(catPhotos)} />
+      <button id="another-cat" class="another-cat" type="button" hidden>
+        <Icon name="refresh" size={14} />
+        Another cat
+      </button>
+      <script is:inline>
+        // Random cat on each visit (never the same twice in a row) + a button to shuffle.
+        // Without JS the default photo stays and the button stays hidden.
+        (function () {
+          var img = document.getElementById('profile-photo');
+          var button = document.getElementById('another-cat');
+          var photos = JSON.parse(img.dataset.photos);
+          var current = null;
+          try { current = localStorage.getItem('profile-photo'); } catch (e) {}
+          function pick() {
+            var options = photos.filter(function (p) { return p !== current; });
+            current = options[Math.floor(Math.random() * options.length)];
+            try { localStorage.setItem('profile-photo', current); } catch (e) {}
+            return current;
+          }
+          img.src = pick();
+          button.hidden = false;
+          button.addEventListener('click', function () {
+            var next = new Image();
+            var src = pick();
+            button.classList.add('spinning');
+            next.onload = next.onerror = function () {
+              img.src = src;
+              button.classList.remove('spinning');
+            };
+            next.src = src;
+          });
+        })();
+      </script>
+    </div>
     <div class="intro">
       <h1>{site.name}</h1>
       <p class="role">{site.title}<br /><span>{site.affiliation}</span></p>
@@ -138,6 +160,47 @@ const fmt = (d: string) => {
     gap: 1.75rem;
     align-items: center;
     margin-top: 0.5rem;
+  }
+  .photo-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .another-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 1.9rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .another-cat:hover {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+  .another-cat[hidden] {
+    display: none;
+  }
+  .another-cat.spinning :global(.icon) {
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .another-cat.spinning :global(.icon) {
+      animation: none;
+    }
   }
   .photo {
     width: 176px;
@@ -273,6 +336,9 @@ const fmt = (d: string) => {
     .photo {
       width: 120px;
       height: 120px;
+    }
+    .photo-col {
+      align-items: flex-start;
     }
     .news li {
       grid-template-columns: 1fr;
