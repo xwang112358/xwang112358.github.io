@@ -8,7 +8,7 @@ export type Publication = {
   badge: string; // short tag, e.g. "NeurIPS 2026"
   year: number;
   status: 'published' | 'preprint' | 'submitted';
-  selected?: boolean;
+  selected?: number; // position in "Selected Publications" on the home page (1 = first)
   note?: string;
   links: { label: string; href: string }[];
 };
@@ -23,7 +23,7 @@ export const publications: Publication[] = [
     badge: 'NeurIPS 2026',
     year: 2026,
     status: 'published',
-    selected: true,
+    selected: 1,
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2510.01632' },
       { label: 'Code', href: 'https://github.com/OliverLaboratory/BioBlobs' },
@@ -36,7 +36,7 @@ export const publications: Publication[] = [
     badge: 'SDM 2026',
     year: 2026,
     status: 'published',
-    selected: true,
+    selected: 4,
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2510.16306' },
       { label: 'Code', href: 'https://github.com/xwang112358/ScaffAug' },
@@ -55,7 +55,7 @@ export const publications: Publication[] = [
     badge: 'Preprint',
     year: 2026,
     status: 'submitted',
-    selected: true,
+    selected: 2,
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2606.12736' },
       { label: 'Project', href: 'https://sciagentarena.github.io/' },
@@ -74,6 +74,7 @@ export const publications: Publication[] = [
     badge: 'Preprint',
     year: 2026,
     status: 'submitted',
+    selected: 3,
     links: [{ label: 'SSRN', href: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6889798' }],
   },
   {
@@ -100,7 +101,7 @@ export const publications: Publication[] = [
     badge: 'NeurIPS 2024',
     year: 2024,
     status: 'published',
-    selected: true,
+    selected: 5,
     links: [
       { label: 'Paper', href: 'https://proceedings.neurips.cc/paper_files/paper/2024/hash/5f2f8305cd1c5be7e8319aea306388ce-Abstract-Datasets_and_Benchmarks_Track.html' },
       { label: 'arXiv', href: 'https://arxiv.org/abs/2411.09820' },

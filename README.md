@@ -17,7 +17,7 @@ npm run preview  # serve the built site
 | --- | --- |
 | Name, bio links, research interests, news | `src/data/site.ts` |
 | Bio paragraphs | `src/pages/index.astro` |
-| Publications (author `†` = equal contribution; `selected: true` shows on the home page) | `src/data/publications.ts` |
+| Publications (author `†` = equal contribution; `selected: <n>` shows it on the home page at position n) | `src/data/publications.ts` |
 | Talks (home page) | `src/data/cv.ts` |
 | CV page (embedded PDF) | `public/files/Xin_Wang_CV.pdf` |
 | Blog posts (Markdown, `$…$` / `$$…$$` math via KaTeX) | `src/content/blog/*.md` |

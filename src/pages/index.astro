@@ -6,7 +6,7 @@ import { site, links, interests, news } from '../data/site';
 import { publications } from '../data/publications';
 import { talks } from '../data/cv';
 
-const selected = publications.filter((p) => p.selected);
+const selected = publications.filter((p) => p.selected).sort((a, b) => a.selected! - b.selected!);
 const fmt = (d: string) => {
   const [y, m] = d.split('-');
   return m ? new Date(Number(y), Number(m) - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : y;
