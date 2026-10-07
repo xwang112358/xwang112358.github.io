@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import PubItem from '../components/PubItem.astro';
+import { publications } from '../data/publications';
+import { links } from '../data/site';
+
+const years = [...new Set(publications.map((p) => p.year))].sort((a, b) => b - a);
+const scholar = links.find((l) => l.icon === 'scholar')!;
+---
+
+<Base title="Publications" description="Publications and preprints by Xin (Allen) Wang.">
+  <h1 class="page-title">Publications</h1>
+  <p class="page-lede">
+    † denotes equal contribution. See also <a href={scholar.href}>Google Scholar</a>.
+  </p>
+  {
+    years.map((year) => (
+      <section class="section" aria-labelledby={`y${year}`}>
+        <div class="section-head">
+          <h2 id={`y${year}`}>{year}</h2>
+        </div>
+        {publications
+          .filter((p) => p.year === year)
+          .map((p) => (
+            <PubItem pub={p} />
+          ))}
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .section:first-of-type {
+    margin-top: 1rem;
+  }
+</style>

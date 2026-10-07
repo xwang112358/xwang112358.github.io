@@ -1,0 +1,166 @@
+---
+import { ME, type Publication } from '../data/publications';
+
+interface Props {
+  pub: Publication;
+  compact?: boolean;
+}
+const { pub, compact = false } = Astro.props;
+
+const MAX_SHOWN = 6;
+const GROUP = 'Bits to Binders Competitors';
+const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const authors = pub.authors.map((raw) => {
+  const equal = raw.endsWith('†');
+  const name = equal ? raw.slice(0, -1) : raw;
+  return { name, equal, me: name === ME, group: name === GROUP };
+});
+// Show the first few authors, always including me (or my consortium); fold the rest.
+const keep = Math.max(...authors.map((a, i) => (a.me || a.group ? i + 1 : 0)));
+const cutoff = Math.max(MAX_SHOWN, keep);
+const long = authors.length > cutoff + 1;
+const shown = long ? authors.slice(0, cutoff) : authors;
+const hidden = long ? authors.slice(cutoff) : [];
+const hasEqual = authors.some((a) => a.equal);
+
+// Built as a string so no template whitespace sneaks in before the commas.
+const fmt = (a: (typeof authors)[number]) => {
+  const cls = a.me ? ' class="me"' : a.group ? ' class="group"' : '';
+  const sup = a.equal ? '<sup title="Equal contribution">†</sup>' : '';
+  return `<span${cls}>${escape(a.name)}</span>${sup}`;
+};
+const shownHtml = shown.map(fmt).join(', ');
+const hiddenHtml = hidden.map(fmt).join(', ');
+---
+
+<article class:list={['pub', { compact }]}>
+  <div class="tags">
+    <span class:list={['badge', { muted: pub.status !== 'published' }]}>{pub.badge}</span>
+  </div>
+  <div class="body">
+    <h3 class="title">{pub.title}</h3>
+    <p class="authors">
+      <Fragment set:html={shownHtml} />{
+        hidden.length > 0 && (
+          <span class="more-wrap">,{' '}<button type="button" class="more" aria-label={`Show ${hidden.length} more authors`}>+{hidden.length} more</button><span class="rest" hidden tabindex="-1" set:html={hiddenHtml} /></span>
+        )
+      }
+    </p>
+    <p class="venue">
+      <em>{pub.venue}</em>, {pub.year}
+      {hasEqual && <span class="equal-note"> · † equal contribution</span>}
+    </p>
+    {pub.note && <p class="note">{pub.note}</p>}
+    {
+      pub.links.length > 0 && (
+        <ul class="pill-links">
+          {pub.links.map((l) => (
+            <li>
+              <a href={l.href} target="_blank" rel="noopener">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<script>
+  // Expand folded author lists.
+  document.querySelectorAll<HTMLButtonElement>('.pub .more').forEach((button) => {
+    button.addEventListener('click', () => {
+      const rest = button.nextElementSibling as HTMLElement | null;
+      if (!rest) return;
+      rest.hidden = false;
+      // Move focus to the revealed names before the button disappears.
+      rest.focus();
+      button.remove();
+    });
+  });
+</script>
+
+<style>
+  .pub {
+    display: grid;
+    grid-template-columns: 6.75rem 1fr;
+    gap: 0.25rem 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pub:last-child {
+    border-bottom: 0;
+  }
+  .tags {
+    padding-top: 0.2rem;
+  }
+  .title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    margin: 0 0 0.25rem;
+  }
+  .authors,
+  .venue,
+  .note {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .authors {
+    color: var(--muted);
+  }
+  .authors :global(.me) {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+  .authors :global(.group) {
+    font-style: italic;
+    color: var(--text);
+  }
+  .authors :global(sup) {
+    font-size: 0.7em;
+    margin-left: 0.05em;
+  }
+  .more {
+    font: inherit;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .more:hover {
+    text-decoration: underline;
+  }
+  .rest:focus {
+    outline: none;
+  }
+  .venue {
+    color: var(--text);
+  }
+  .equal-note {
+    color: var(--faint);
+    font-size: 0.82rem;
+  }
+  .note {
+    color: var(--muted);
+    font-style: italic;
+  }
+  .compact {
+    padding: 0.95rem 0;
+  }
+  @media (max-width: 560px) {
+    .pub {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

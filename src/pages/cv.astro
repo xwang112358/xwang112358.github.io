@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+
+<Base title="CV" description="Curriculum vitae of Xin (Allen) Wang.">
+  <div class="cv-head">
+    <h1 class="page-title">Curriculum Vitae</h1>
+    <a class="button" href={site.cvPdf} target="_blank" rel="noopener"><Icon name="cv" size={16} /> Open PDF in new tab</a>
+  </div>
+
+  <object class="pdf" data={`${site.cvPdf}#navpanes=0&view=FitH`} type="application/pdf" aria-label="Curriculum vitae (PDF)">
+    <div class="pdf-fallback">
+      <p>Your browser can't display the PDF here.</p>
+      <p><a class="button" href={site.cvPdf} target="_blank" rel="noopener">Open the CV (PDF)</a></p>
+    </div>
+  </object>
+</Base>
+
+<style>
+  .cv-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .cv-head .page-title {
+    margin: 0;
+  }
+  .pdf {
+    display: block;
+    width: 100%;
+    height: min(85vh, 1100px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .pdf-fallback {
+    padding: 2.5rem 1.25rem;
+    text-align: center;
+    color: var(--muted);
+  }
+</style>

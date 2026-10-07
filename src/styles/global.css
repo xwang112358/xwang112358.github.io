@@ -1,0 +1,371 @@
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1b1d22;
+  --muted: #5a606c;
+  --faint: #6b717c; /* ≥ 4.5:1 on --bg and --surface */
+  --border: #e7e3da;
+  --accent: #1d4f91;
+  --accent-strong: #00356b; /* Yale Blue */
+  --accent-soft: #eaf0f8;
+  --highlight: #fff3c4;
+  --code-bg: #f3f1ec;
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.06);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+
+  --measure: 46rem;
+  --radius: 10px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0e1116;
+    --surface: #151a21;
+    --text: #e6e8eb;
+    --muted: #a0a7b3;
+    --faint: #7f8794;
+    --border: #262c36;
+    --accent: #8ab4ff;
+    --accent-strong: #b3ceff;
+    --accent-soft: #18223a;
+    --highlight: #3a3216;
+    --code-bg: #1b2028;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0e1116;
+  --surface: #151a21;
+  --text: #e6e8eb;
+  --muted: #a0a7b3;
+  --faint: #7f8794;
+  --border: #262c36;
+  --accent: #8ab4ff;
+  --accent-strong: #b3ceff;
+  --accent-soft: #18223a;
+  --highlight: #3a3216;
+  --code-bg: #1b2028;
+  --shadow: none;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Keep focused/anchored elements clear of the sticky header. */
+  scroll-padding-top: 4.5rem;
+}
+@media (max-width: 520px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+a:hover {
+  color: var(--accent-strong);
+  text-decoration-color: currentColor;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  background: var(--surface);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  z-index: 10;
+}
+.skip-link:focus {
+  left: 0.5rem;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+main {
+  padding: 2.5rem 0 4rem;
+}
+.page-title {
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  margin-bottom: 0.4rem;
+}
+.page-lede {
+  color: var(--muted);
+  margin: 0 0 2rem;
+}
+
+/* Section heading used on every page */
+.section {
+  margin-top: 3rem;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+.section-head h2 {
+  font-size: 1.35rem;
+}
+.section-head a,
+.section-head .aside {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.section-head .aside {
+  color: var(--faint);
+}
+
+/* ---------- Small shared pieces ---------- */
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.32rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+.badge.muted {
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  color: var(--muted);
+}
+.pill-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.pill-links a {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.18rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  background: var(--surface);
+}
+.pill-links a:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  background: var(--accent-strong);
+  color: #fff;
+  text-decoration: none;
+}
+.button:hover {
+  color: #fff;
+  background: var(--accent);
+}
+:root[data-theme='dark'] .button,
+:root[data-theme='dark'] .button:hover {
+  color: #0e1116;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .button,
+  :root:not([data-theme='light']) .button:hover {
+    color: #0e1116;
+  }
+}
+
+/* ---------- Prose (blog posts) ---------- */
+.prose {
+  font-size: 1.04rem;
+  overflow-wrap: break-word;
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose p,
+.prose ul,
+.prose ol {
+  margin-bottom: 0;
+}
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2.2em;
+}
+.prose h3 {
+  font-size: 1.2rem;
+  margin-top: 1.8em;
+}
+.prose li + li {
+  margin-top: 0.3em;
+}
+.prose figure,
+.prose .figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+.prose img {
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+/* Figures are mostly transparent PNGs with dark text: give them a light card in dark mode. */
+:root[data-theme='dark'] .prose img {
+  background: #fff;
+  padding: 0.5rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .prose img {
+    background: #fff;
+    padding: 0.5rem;
+  }
+}
+.prose figcaption,
+.prose .caption {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-top: 0.6rem;
+  text-align: center;
+}
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 1.1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--code-bg);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+.prose pre {
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+}
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Shiki dual themes */
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .astro-code,
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

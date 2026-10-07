@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found" noindex>
+  <div class="nf">
+    <p class="code">404</p>
+    <h1 class="page-title">Page not found</h1>
+    <p class="page-lede">The page you're looking for may have moved since the site was redesigned.</p>
+    <p><a href="/">Back to the home page</a> · <a href="/publications/">Publications</a> · <a href="/blog/">Blog</a></p>
+  </div>
+</Base>
+
+<style>
+  .nf {
+    padding: 3rem 0;
+  }
+  .code {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    color: var(--faint);
+    margin: 0;
+    line-height: 1;
+  }
+</style>

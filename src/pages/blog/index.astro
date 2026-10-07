@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+
+<Base title="Blog" description="Project write-ups and notes by Xin (Allen) Wang.">
+  <h1 class="page-title">Blog</h1>
+  <p class="page-lede">Project write-ups and notes.</p>
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <article class="card">
+            <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+            <h2>
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p>{post.data.description}</p>
+            {post.data.tags.length > 0 && (
+              <ul class="tags" aria-label="Tags">
+                {post.data.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .posts {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .card {
+    position: relative;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    transition: border-color 0.15s;
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  /* Stretch the title link over the whole card so the card stays clickable. */
+  h2 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+  h2 a:focus-visible {
+    outline: none;
+  }
+  h2 a:focus-visible::after {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  time {
+    color: var(--faint);
+    font-size: 0.85rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 0.2rem 0 0.4rem;
+  }
+  .card:hover h2 a {
+    color: var(--accent-strong);
+  }
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--muted) 10%, transparent);
+    color: var(--muted);
+  }
+</style>

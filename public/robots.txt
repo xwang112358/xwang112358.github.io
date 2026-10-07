@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xwang112358.github.io/sitemap-index.xml

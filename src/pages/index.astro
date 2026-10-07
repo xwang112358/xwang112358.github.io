@@ -1,0 +1,259 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PubItem from '../components/PubItem.astro';
+import { site, links, interests, news } from '../data/site';
+import { publications } from '../data/publications';
+import { talks } from '../data/cv';
+
+const selected = publications.filter((p) => p.selected);
+const fmt = (d: string) => {
+  const [y, m] = d.split('-');
+  return m ? new Date(Number(y), Number(m) - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : y;
+};
+---
+
+<Base>
+  <section class="hero">
+    <img class="photo" src={site.photo} alt={site.photoAlt} width="176" height="176" />
+    <div class="intro">
+      <h1>{site.name}</h1>
+      <p class="role">{site.title}<br /><span>{site.affiliation}</span></p>
+      <ul class="links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                <Icon name={l.icon} size={16} />
+                <span>{l.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bio" aria-label="About">
+    <p>
+      I am a Ph.D. student in Computational Biology and Bioinformatics at <strong>Yale University</strong>, advised by
+      <a href="https://medicine.yale.edu/profile/qingyu-chen/">Dr. Qingyu Chen</a> in the Department of Biomedical
+      Informatics &amp; Data Science. I also work with <a href="https://carlosoliver.co/">Dr. Carlos Oliver</a> at
+      Vanderbilt's <a href="https://www.vanderbilt.edu/ai-proteindynamics/">Center for AI in Protein Dynamics</a>.
+    </p>
+    <p>
+      My research builds <strong>AI systems for scientific discovery</strong>: agents for data-driven discovery,
+      protein and RNA language models, generative models for biomolecular design, and rigorous evaluation of AI
+      agents on real scientific tasks.
+    </p>
+    <p>
+      Before Yale, I earned an M.S. in Computer Science from Vanderbilt University, where I worked with
+      <a href="https://tylersnetwork.github.io/">Dr. Tyler Derr</a> and <a href="https://meilerlab.org/">Dr. Jens Meiler</a>
+      on data-centric machine learning for drug discovery, and a B.S. in Statistics and Data Science from UC Santa Barbara,
+      where I worked with <a href="https://sites.brown.edu/caveslab/people/eleanor-caves/">Dr. Eleanor Caves</a> on
+      computer vision for biological image analysis.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="interests">
+    <div class="section-head"><h2 id="interests">Research Interests</h2></div>
+    <ul class="interests">
+      {
+        interests.map((i) => (
+          <li>
+            <h3>{i.title}</h3>
+            <p>{i.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="news">
+    <div class="section-head"><h2 id="news">News</h2></div>
+    <ul class="news">
+      {
+        news.map((n) => (
+          <li>
+            <time datetime={n.date}>{fmt(n.date)}</time>
+            <p set:html={n.html} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="pubs">
+    <div class="section-head">
+      <h2 id="pubs">Selected Publications</h2>
+      <a href="/publications/">All publications <Icon name="arrow-right" size={14} /></a>
+    </div>
+    {selected.map((p) => <PubItem pub={p} compact />)}
+  </section>
+
+  <section class="section" aria-labelledby="talks">
+    <div class="section-head"><h2 id="talks">Talks</h2></div>
+    <ul class="talks">
+      {
+        talks.map((t) => (
+          <li>
+            <span class="talk-title">{t.title}</span>
+            <span class="talk-meta">
+              {t.kind}, <a href={t.href}>{t.event}</a> · {t.place} · {t.date}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  .photo {
+    width: 176px;
+    height: 176px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    margin-bottom: 0.35rem;
+  }
+  .role {
+    margin: 0 0 1rem;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+  .role span {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .links a:hover {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+  .bio {
+    margin-top: 2.25rem;
+    font-size: 1.04rem;
+  }
+  .bio p {
+    margin: 0 0 1rem;
+  }
+  .interests {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .interests li {
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  .interests h3 {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    margin-bottom: 0.35rem;
+    color: var(--accent-strong);
+  }
+  .interests p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .news {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .news li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+  .news time {
+    color: var(--faint);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.08rem;
+  }
+  .news p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .talks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .talks li {
+    display: flex;
+    flex-direction: column;
+  }
+  .talk-title {
+    font-weight: 600;
+  }
+  .talk-meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 720px) {
+    .interests {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+    .photo {
+      width: 120px;
+      height: 120px;
+    }
+    .news li {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+</style>

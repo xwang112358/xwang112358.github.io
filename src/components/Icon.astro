@@ -1,0 +1,57 @@
+---
+// Inline SVG icons: brand marks from Simple Icons (CC0), UI glyphs from Lucide (ISC).
+import { siGithub, siOrcid, siGooglescholar } from 'simple-icons';
+import mail from 'lucide-static/icons/mail.svg?raw';
+import fileText from 'lucide-static/icons/file-text.svg?raw';
+import sun from 'lucide-static/icons/sun.svg?raw';
+import moon from 'lucide-static/icons/moon.svg?raw';
+import arrowRight from 'lucide-static/icons/arrow-right.svg?raw';
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+const { name, size = 18, class: className } = Astro.props;
+
+const brand: Record<string, string> = {
+  github: siGithub.path,
+  orcid: siOrcid.path,
+  scholar: siGooglescholar.path,
+  // Simple rounded "in" mark (Simple Icons no longer ships LinkedIn).
+  linkedin:
+    'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z',
+};
+const stroke: Record<string, string> = {
+  mail,
+  cv: fileText,
+  sun,
+  moon,
+  'arrow-right': arrowRight,
+};
+
+// Normalize a Lucide SVG string to our size/class (replacing its own class attribute).
+const strokeSvg = stroke[name]
+  ?.replace(/width="\d+"/, `width="${size}"`)
+  .replace(/height="\d+"/, `height="${size}"`)
+  .replace(/class="[^"]*"/, `class="${['icon', className].filter(Boolean).join(' ')}"`)
+  .replace('<svg', '<svg aria-hidden="true" focusable="false"')
+  .replace(/<!--[\s\S]*?-->/g, '');
+---
+
+{
+  brand[name] ? (
+    <svg class:list={['icon', className]} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d={brand[name]} />
+    </svg>
+  ) : (
+    <Fragment set:html={strokeSvg} />
+  )
+}
+
+<style>
+  :global(.icon) {
+    flex: none;
+    vertical-align: middle;
+  }
+</style>

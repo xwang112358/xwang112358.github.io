@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© {year} {site.name}</p>
+    <p class="meta">Last updated {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    color: var(--faint);
+    font-size: 0.85rem;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+  p {
+    margin: 0;
+  }
+</style>

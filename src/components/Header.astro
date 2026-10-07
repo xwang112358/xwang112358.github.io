@@ -1,0 +1,179 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const nav = [
+  { href: '/', label: 'About' },
+  { href: '/publications/', label: 'Publications' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/cv/', label: 'CV' },
+];
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+// "page" on the section's own page, "true" (current section) on its subpages, e.g. a blog post.
+const current = (href: string) => {
+  if (path === href) return 'page';
+  if (href !== '/' && path.startsWith(href)) return 'true';
+  return undefined;
+};
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/">{site.shortName}</a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current(item.href)}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode">
+      <Icon name="moon" size={17} class="when-light" />
+      <Icon name="sun" size={17} class="when-dark" />
+    </button>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : media.matches);
+  const sync = () => button?.setAttribute('aria-pressed', String(isDark()));
+  sync();
+  media.addEventListener('change', sync);
+  button?.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    sync();
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'brand nav toggle';
+    align-items: center;
+    gap: 0.25rem 1rem;
+    min-height: 3.5rem;
+  }
+  .brand {
+    grid-area: brand;
+  }
+  nav {
+    grid-area: nav;
+    justify-self: end;
+  }
+  .theme-toggle {
+    grid-area: toggle;
+  }
+  .brand {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.12rem;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  ul {
+    display: flex;
+    gap: 0.1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  ul a {
+    display: block;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.93rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  ul a:hover {
+    color: var(--text);
+    background: color-mix(in srgb, var(--muted) 10%, transparent);
+  }
+  /* The ul scrolls horizontally, which would clip an outside focus ring. */
+  ul a:focus-visible {
+    outline-offset: -2px;
+  }
+  ul a[aria-current] {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+  }
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-left: 0.2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    flex: none;
+  }
+  .theme-toggle:hover {
+    color: var(--text);
+  }
+  .theme-toggle :global(.when-dark) {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.when-dark) {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.when-light) {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.when-dark) {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.when-light) {
+      display: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .bar {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'brand toggle' 'nav nav';
+      padding-top: 0.5rem;
+      padding-bottom: 0.35rem;
+    }
+    nav {
+      justify-self: start;
+      margin-left: -0.6rem;
+    }
+  }
+</style>
