@@ -60,7 +60,7 @@ export const news: { date: string; html: string }[] = [
   },
   {
     date: '2025-08',
-    html: 'Started my Ph.D. in Computational Biology & Bioinformatics at <strong>Yale University</strong>, advised by Dr. Qingyu Chen.',
+    html: 'Started my Ph.D. in Computational Biology & Bioinformatics at <strong>Yale University</strong>.',
   },
   {
     date: '2024-12',
