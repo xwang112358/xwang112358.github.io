@@ -17,7 +17,7 @@
   --font-serif: 'Source Serif 4 Variable', 'Iowan Old Style', Georgia, serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
 
-  --measure: 46rem;
+  --measure: 56rem; /* page width */
   --radius: 10px;
   color-scheme: light;
 }
