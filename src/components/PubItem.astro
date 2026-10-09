@@ -23,6 +23,8 @@ const long = authors.length > cutoff + 1;
 const shown = long ? authors.slice(0, cutoff) : authors;
 const hidden = long ? authors.slice(cutoff) : [];
 const hasEqual = authors.some((a) => a.equal);
+// Short paper name for click stats, e.g. "BioBlobs · arXiv".
+const shortTitle = pub.title.split(':')[0];
 
 // Built as a string so no template whitespace sneaks in before the commas.
 const fmt = (a: (typeof authors)[number]) => {
@@ -57,7 +59,7 @@ const hiddenHtml = hidden.map(fmt).join(', ');
         <ul class="pill-links">
           {pub.links.map((l) => (
             <li>
-              <a href={l.href} target="_blank" rel="noopener">
+              <a href={l.href} target="_blank" rel="noopener" data-goatcounter-click={`${shortTitle} · ${l.label}`}>
                 {l.label}
               </a>
             </li>

@@ -12,6 +12,8 @@ export const site = {
   photo: '/images/profile.jpg',
   // Default photo; the home page's "More Cats!" button swaps in photos from public/images/cats/.
   photoAlt: 'A photo of my cats',
+  // GoatCounter site code: visitor stats at https://xwang112358.goatcounter.com (counted on the live site only).
+  goatcounter: 'xwang112358',
 };
 
 export type Link = { label: string; href: string; icon: 'mail' | 'scholar' | 'github' | 'linkedin' | 'orcid' | 'cv' };

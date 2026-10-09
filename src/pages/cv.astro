@@ -7,13 +7,13 @@ import { site } from '../data/site';
 <Base title="CV" description="Curriculum vitae of Xin (Allen) Wang.">
   <div class="cv-head">
     <h1 class="page-title">Curriculum Vitae</h1>
-    <a class="button" href={site.cvPdf} target="_blank" rel="noopener"><Icon name="cv" size={16} /> Open PDF in new tab</a>
+    <a class="button" href={site.cvPdf} target="_blank" rel="noopener" data-goatcounter-click="cv-pdf" data-goatcounter-title="Open CV PDF"><Icon name="cv" size={16} /> Open PDF in new tab</a>
   </div>
 
   <object class="pdf" data={`${site.cvPdf}#navpanes=0&view=FitH`} type="application/pdf" aria-label="Curriculum vitae (PDF)">
     <div class="pdf-fallback">
       <p>Your browser can't display the PDF here.</p>
-      <p><a class="button" href={site.cvPdf} target="_blank" rel="noopener">Open the CV (PDF)</a></p>
+      <p><a class="button" href={site.cvPdf} target="_blank" rel="noopener" data-goatcounter-click="cv-pdf" data-goatcounter-title="Open CV PDF">Open the CV (PDF)</a></p>
     </div>
   </object>
 </Base>
