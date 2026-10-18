@@ -78,16 +78,6 @@ export const publications: Publication[] = [
     links: [{ label: 'SSRN', href: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6889798' }],
   },
   {
-    title: 'KnitNet: Learning to Search at Inference Time for Exact RNA Inverse Design',
-    authors: ['Antonia Panescu', 'Xin Wang', 'Haoran Xu', 'Qingyu Chen', 'Carlos Oliver', 'Rex Ying'],
-    venue: 'Under submission',
-    badge: 'Submitted',
-    year: 2026,
-    status: 'submitted',
-    selected: 5,
-    links: [],
-  },
-  {
     title: 'Validation and Analysis of 12,000 AI-driven CAR-T Designs in the Bits to Binders Competitions',
     authors: [
       'Clayton W. Kosonocky', 'Alex M. Abel', 'Aaron L. Feller', 'Amanda E. Cifuentes Rieffer', 'Phillip R. Woolley',
@@ -111,7 +101,7 @@ export const publications: Publication[] = [
     badge: 'NeurIPS 2024',
     year: 2024,
     status: 'published',
-    selected: 6,
+    selected: 5,
     links: [
       { label: 'Paper', href: 'https://proceedings.neurips.cc/paper_files/paper/2024/hash/5f2f8305cd1c5be7e8319aea306388ce-Abstract-Datasets_and_Benchmarks_Track.html' },
       { label: 'arXiv', href: 'https://arxiv.org/abs/2411.09820' },
