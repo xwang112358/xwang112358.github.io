@@ -46,7 +46,7 @@ export const interests = [
 export const news: { date: string; html: string }[] = [
   {
     date: '2026-09',
-    html: '<a href="https://arxiv.org/abs/2510.01632"><em>BioBlobs: Unsupervised Discovery of Functional Substructures for Protein Function Prediction</em></a> accepted at <strong>NeurIPS 2026</strong>.',
+    html: '<a href="https://arxiv.org/abs/2510.01632"><em>BioBlobs: Unsupervised Discovery of Functional Substructures</em></a> accepted at <strong>NeurIPS 2026</strong>.',
   },
   {
     date: '2026-08',

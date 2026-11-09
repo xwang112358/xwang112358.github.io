@@ -17,7 +17,7 @@ export const ME = 'Xin Wang';
 
 export const publications: Publication[] = [
   {
-    title: 'BioBlobs: Unsupervised Discovery of Functional Substructures for Protein Function Prediction',
+    title: 'BioBlobs: Unsupervised Discovery of Functional Substructures',
     authors: ['Xin Wang', 'Kaiwen Shi', 'Carlos Oliver'],
     venue: 'Advances in Neural Information Processing Systems (NeurIPS)',
     badge: 'NeurIPS 2026',
