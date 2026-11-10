@@ -6,7 +6,7 @@ export const site = {
   title: 'Ph.D. Student, Computational Biology & Bioinformatics',
   affiliation: 'Yale University',
   description:
-    'Xin (Allen) Wang is a Ph.D. student at Yale University building AI systems for scientific discovery: agents for data-driven discovery, protein & RNA language models, biomolecular design, and AI agent evaluation.',
+    'Xin (Allen) Wang is a Ph.D. student at Yale University working on AI scientists, recursive self-improvement (RSI), and bio foundation models.',
   email: 'allen.wang.xw532@yale.edu',
   cvPdf: '/files/Xin_Wang_CV.pdf',
   photo: '/images/profile.jpg',
@@ -27,18 +27,25 @@ export const links: Link[] = [
   { label: 'CV', href: '/cv/', icon: 'cv' },
 ];
 
-export const interests = [
+// "Featured Work" cards on the home page. Figures are cropped from the papers' own figures (public/images/featured/).
+export const featured = [
   {
-    title: 'AI agents for scientific discovery',
-    text: 'Agents for data-driven discovery, and rigorous evaluation of AI agents on real scientific tasks.',
+    title: 'SciAgentArena',
+    text: 'A living benchmark of ~200 real research tasks for evaluating AI agents in science, from patients to molecules.',
+    href: 'https://sciagentarena.github.io/',
+    image: '/images/featured/sciagentarena.webp',
+    width: 1400,
+    height: 465,
+    alt: 'SciAgentArena roadmap from patient to molecule: electronic health records, genetics sequencing, spatial and single-cell omics, and drug discovery.',
   },
   {
-    title: 'Protein & RNA language models',
-    text: 'Learning representations of biomolecules from sequence and structure.',
-  },
-  {
-    title: 'Biomolecular design',
-    text: 'Generative models, including diffusion language models, for designing and optimizing biomolecules.',
+    title: 'BioBlobs',
+    text: 'Discovers functional protein substructures without supervision. Explore them on 883 enzymes in an interactive 3D viewer.',
+    href: 'https://oliverlaboratory.com/resources/bioblobs/#1k32-A',
+    image: '/images/featured/bioblobs.webp',
+    width: 1600,
+    height: 668,
+    alt: 'BioBlobs pipeline: a protein encoder, a neural blob partitioner that grows spatially local blobs from seed residues, and a blob-based multiple-instance predictor.',
   },
 ];
 

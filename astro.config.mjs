@@ -28,7 +28,7 @@ export default defineConfig({
     '/posts/UAT': '/blog/universal-approximation-theorem/',
     // Post is a draft for now; point back at /blog/molecules-as-cellular-complexes/ when it is published.
     '/posts/2023/12/cell': '/blog/',
-    '/publication/2024-CIKM': '/publications/',
-    '/publication/2024-NeurIPS-WelQrate': '/publications/',
+    '/publication/2024-CIKM': '/',
+    '/publication/2024-NeurIPS-WelQrate': '/',
   },
 });

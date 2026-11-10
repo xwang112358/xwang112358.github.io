@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PubItem from '../components/PubItem.astro';
-import { site, links, interests, news } from '../data/site';
+import { site, links, featured, news } from '../data/site';
 import { publications } from '../data/publications';
 import { talks } from '../data/cv';
 import { readdirSync } from 'node:fs';
@@ -79,14 +79,14 @@ const fmt = (d: string) => {
   <section class="bio" aria-label="About">
     <p>
       I am a Ph.D. student in Computational Biology and Bioinformatics at <strong>Yale University</strong>, advised by
-      <a href="https://medicine.yale.edu/profile/qingyu-chen/">Dr. Qingyu Chen</a> in the Department of Biomedical
-      Informatics &amp; Data Science. I also work with <a href="https://carlosoliver.co/">Dr. Carlos Oliver</a> at
+      <a href="https://medicine.yale.edu/profile/qingyu-chen/">Dr. Qingyu Chen</a>. I also work with <a href="https://carlosoliver.co/">Dr. Carlos Oliver</a> at
       Vanderbilt's <a href="https://www.vanderbilt.edu/ai-proteindynamics/">Center for AI in Protein Dynamics</a>.
     </p>
     <p>
-      My research builds <strong>AI systems for scientific discovery</strong>: agents for data-driven discovery,
-      protein and RNA language models, generative models for biomolecular design, and rigorous evaluation of AI
-      agents on real scientific tasks.
+      I am building <strong>AI scientists for biology and medicine</strong>: agents that run the research loop themselves and improve along
+      the way through <strong>recursive self-improvement (RSI)</strong>. I also build
+      <strong>bio foundation models</strong> for proteins and RNA, which give these AI scientists both biological
+      knowledge and powerful tools to work with.
     </p>
     <p>
       Before Yale, I earned an M.S. in Computer Science from Vanderbilt University, where I worked with
@@ -95,20 +95,38 @@ const fmt = (d: string) => {
       where I worked with <a href="https://sites.brown.edu/caveslab/people/eleanor-caves/">Dr. Eleanor Caves</a> on
       computer vision for biological image analysis.
     </p>
+    <p class="open-to">
+      I'm looking for <strong>research internships for Summer 2027</strong>.
+    </p>
   </section>
 
-  <section class="section" aria-labelledby="interests">
-    <div class="section-head"><h2 id="interests">Research Interests</h2></div>
-    <ul class="interests">
+  <section class="section" aria-labelledby="featured">
+    <div class="section-head"><h2 id="featured">Featured Work</h2></div>
+    <div class="featured">
       {
-        interests.map((i) => (
-          <li>
-            <h3>{i.title}</h3>
-            <p>{i.text}</p>
-          </li>
+        featured.map((f) => (
+          <a
+            class="feature"
+            href={f.href}
+            target="_blank"
+            rel="noopener"
+            data-goatcounter-click={`${f.title} · Featured`}
+            data-goatcounter-title={`Featured: ${f.title}`}
+          >
+            <div class="feature-fig">
+              <img src={f.image} alt={f.alt} width={f.width} height={f.height} loading="lazy" />
+            </div>
+            <div class="feature-body">
+              <h3>
+                {f.title}
+                <Icon name="arrow-up-right" size={16} />
+              </h3>
+              <p>{f.text}</p>
+            </div>
+          </a>
         ))
       }
-    </ul>
+    </div>
   </section>
 
   <section class="section" aria-labelledby="news">
@@ -128,7 +146,6 @@ const fmt = (d: string) => {
   <section class="section" aria-labelledby="pubs">
     <div class="section-head">
       <h2 id="pubs">Selected Publications</h2>
-      <a href="/publications/">All publications <Icon name="arrow-right" size={14} /></a>
     </div>
     {selected.map((p) => <PubItem pub={p} compact />)}
   </section>
@@ -254,34 +271,78 @@ const fmt = (d: string) => {
   .bio p {
     margin: 0 0 1rem;
   }
-  .interests {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .bio .open-to {
+    padding: 0.7rem 1rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--surface);
   }
-  .interests li {
-    padding: 1rem 1.05rem;
+  .featured {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .feature {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
     box-shadow: var(--shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
   }
-  .interests h3 {
+  .feature:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+  /* Figures are drawn on white, so keep a white panel in both themes. */
+  .feature-fig {
+    box-sizing: border-box;
+    aspect-ratio: 5 / 2;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.6rem 0.8rem;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-fig img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .feature-body {
+    padding: 0.85rem 1.05rem 1rem;
+  }
+  .feature h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0 0 0.3rem;
     font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0;
-    margin-bottom: 0.35rem;
     color: var(--accent-strong);
   }
-  .interests p {
+  .feature h3 :global(.icon) {
+    color: var(--faint);
+  }
+  .feature:hover h3 :global(.icon) {
+    color: var(--accent);
+  }
+  .feature p {
     margin: 0;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     line-height: 1.55;
     color: var(--muted);
+  }
+  @media (max-width: 720px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
   }
   .news {
     margin: 0;
@@ -319,11 +380,6 @@ const fmt = (d: string) => {
   .talk-meta {
     color: var(--muted);
     font-size: 0.9rem;
-  }
-  @media (max-width: 720px) {
-    .interests {
-      grid-template-columns: 1fr;
-    }
   }
   @media (max-width: 560px) {
     .hero {
